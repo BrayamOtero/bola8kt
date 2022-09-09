@@ -26,10 +26,9 @@ fun main(args: Array<String>) {
             "2. Check all answers\n" +
             "3. Exit")
     //leyendo la respuesta del usuario
-    val inputValue = readLine()
 
     //funciones a executar segun la respuesta del usuario
-    when(inputValue){
+    when(readLine()){
         "1"->askQuestion()
         "2"->checkAnswer()
         "3"->exit()
@@ -63,14 +62,17 @@ fun checkAnswer(){
 }
 
 fun showAnswerByType(answerType : String = "ALL"){
+    val printAnswer : (Map<String, String>) -> Unit = {
+        println(it.keys)
+    }
     when(answerType){
         "ALL" -> answers.keys.forEach{answer -> println(answer)}
         AFFIRMATIVE_ANSWER -> answers.filterValues { values -> values == AFFIRMATIVE_ANSWER }
-            .also { affirmativeAnswers -> println(affirmativeAnswers.keys) }
+            .also { printAnswer(it) }
         NEGATIVE_ANSWER -> answers.filterValues { values -> values == NEGATIVE_ANSWER }
-            .also { negativeAnswers -> println(negativeAnswers.keys) }
+            .also { printAnswer(it) }
         DOUBTFUL_ANSWER -> answers.filterValues { values -> values == DOUBTFUL_ANSWER }
-            .also { doubtfulAnswers -> println(doubtfulAnswers.keys) }
+            .also { printAnswer(it) }
     }
 }
 fun exit(){
