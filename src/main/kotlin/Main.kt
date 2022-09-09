@@ -38,10 +38,44 @@ fun main(args: Array<String>) {
 }
 
 fun askQuestion(){
+    println("What do you wish to ask?")
+    readLine()
+    println("So that was you question.. The answer is: ")
+    val answerGenerate = answers.keys.random()
+    println(answerGenerate)
 }
 fun checkAnswer(){
+    println("Select a choose")
+    println("1. Check all answer.")
+    println("2. Check only affirmative answers.")
+    println("3. Check only doubtful answers.")
+    println("4. Check only negative answers.")
+
+    val enteredChoose = readLine()
+
+    when(enteredChoose) {
+        "1" -> showAnswerByType()
+        "2" -> showAnswerByType(answerType =  AFFIRMATIVE_ANSWER)
+        "3" -> showAnswerByType(answerType = DOUBTFUL_ANSWER)
+        "4" -> showAnswerByType(answerType = NEGATIVE_ANSWER)
+    else    -> println("Invalidate answer. Good Bye.")
+    }
+}
+
+fun showAnswerByType(answerType : String = "ALL"){
+    when(answerType){
+        "ALL" -> answers.keys.forEach{answer -> println(answer)}
+        AFFIRMATIVE_ANSWER -> answers.filterValues { values -> values == AFFIRMATIVE_ANSWER }
+            .also { affirmativeAnswers -> println(affirmativeAnswers.keys) }
+        NEGATIVE_ANSWER -> answers.filterValues { values -> values == NEGATIVE_ANSWER }
+            .also { negativeAnswers -> println(negativeAnswers.keys) }
+        DOUBTFUL_ANSWER -> answers.filterValues { values -> values == DOUBTFUL_ANSWER }
+            .also { doubtfulAnswers -> println(doubtfulAnswers.keys) }
+    }
 }
 fun exit(){
+    println("Good Bye")
 }
 fun showError(){
+    println("Oops it seems you have chosen an invalidate option.")
 }
